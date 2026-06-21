@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 533" width="800" height="533">
+  <defs>
+    <pattern id="halftone" width="10" height="10" patternUnits="userSpaceOnUse">
+      <circle cx="5" cy="5" r="2.6" fill="#2B2620" opacity="0.18"/>
+    </pattern>
+    <linearGradient id="paperGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#E7DAB9"/>
+      <stop offset="100%" stop-color="#D8C9A3"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="533" fill="url(#paperGrad)"/>
+  <rect width="800" height="533" fill="url(#halftone)"/>
+  <rect x="0" y="0" width="800" height="533" fill="none" stroke="#2B2620" stroke-width="6"/>
+  <rect x="14" y="14" width="772" height="505" fill="none" stroke="#2B2620" stroke-width="1.5"/>
+  <g transform="translate(400,235)" fill="none" stroke="#2B2620" stroke-width="3" opacity="0.55">
+    <circle r="62"/>
+    <path d="M -62 0 H 62 M 0 -62 V 62 M -44 -44 A 62 62 0 0 1 44 -44 M -44 44 A 62 62 0 0 0 44 44"/>
+  </g>
+  <text x="400" y="345" font-family="Georgia, serif" font-size="22" fill="#2B2620" text-anchor="middle" letter-spacing="3" opacity="0.7">PHOTO TO COME</text>
+  <text x="400" y="372" font-family="Georgia, serif" font-size="13" fill="#2B2620" text-anchor="middle" letter-spacing="2" opacity="0.5">THE ARMCHAIR GAZETTE FILE PHOTO</text>
+</svg>
