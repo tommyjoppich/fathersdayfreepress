@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Armchair Gazette</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,600&family=Lora:ital,wght@0,400;0,500;1,400&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F1E7CE;
+    --paper-light: #FAF5E6;
+    --paper-shadow: #D9C9A4;
+    --ink: #2B2620;
+    --ink-soft: #5C5347;
+    --crimson: #8C2F1B;
+    --rule: #2B2620;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'Lora', Georgia, serif;
+    --font-utility: 'Oswald', Arial, sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html,body{
+    margin:0;
+    padding:0;
+    background-color: var(--paper);
+    background-image:
+      radial-gradient(rgba(0,0,0,0.035) 1px, transparent 1px);
+    background-size: 3px 3px;
+    color: var(--ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: var(--crimson); text-decoration: none; }
+  a:hover{ text-decoration: underline; }
+
+  img{ max-width: 100%; display:block; }
+
+  .vintage-photo{
+    filter: sepia(45%) contrast(1.05) saturate(0.85);
+  }
+
+  .wrap{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ---------- MASTHEAD ---------- */
+  header.masthead{
+    border-bottom: 5px double var(--rule);
+    padding-top: 18px;
+    padding-bottom: 14px;
+  }
+
+  .meta-strip{
+    display:flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-utility);
+    font-size: 0.68rem;
+    letter-spacing: 1.5px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+  }
+
+  .masthead-title{
+    text-align:center;
+    margin: 6px 0 4px 0;
+  }
+
+  .masthead-title h1{
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2.4rem, 7vw, 4.6rem);
+    letter-spacing: 1px;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .masthead-title a{
+    color: inherit;
+    text-decoration: none;
+  }
+  .masthead-title a:hover{
+    text-decoration: none;
+    opacity: 0.85;
+  }
+
+  .masthead-tagline{
+    text-align:center;
+    font-family: var(--font-utility);
+    font-size: 0.72rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--crimson);
+    margin: 8px 0 0 0;
+  }
+
+  .masthead-sub{
+    text-align:center;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+    margin: 6px 0 0 0;
+  }
+
+  /* ---------- HOME / FEED ---------- */
+  main{ padding: 24px 0 60px; }
+
+  .section-label{
+    font-family: var(--font-utility);
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    border-top: 2px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 5px 0;
+    margin: 0 0 6px 0;
+  }
+
+  .byline{
+    font-family: var(--font-utility);
+    font-size: 0.7rem;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--crimson);
+  }
+  .byline .dot{ color: var(--ink-soft); margin: 0 6px; }
+  .byline .date{ color: var(--ink-soft); }
+
+  /* ---------- FEED LIST ---------- */
+  .feed{
+    margin: 0;
+    padding: 0;
+  }
+  .feed-item{
+    display:flex;
+    align-items: center;
+    gap: 16px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--paper-shadow);
+    cursor: pointer;
+  }
+  .feed-item .thumb{
+    flex: 0 0 92px;
+    width: 92px;
+    height: 92px;
+    border: 1px solid var(--ink);
+    padding: 3px;
+    background: var(--paper-light);
+  }
+  .feed-item .thumb img{ width:100%; height:100%; object-fit: cover; }
+  .feed-item .feed-text{ flex: 1 1 auto; min-width: 0; }
+  .feed-item h3{
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    line-height: 1.2;
+    margin: 0 0 4px 0;
+  }
+  .feed-item .dek{
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    margin: 4px 0 0 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  @media (max-width: 560px){
+    .feed-item .thumb{ flex: 0 0 72px; width: 72px; height: 72px; }
+    .feed-item h3{ font-size: 1.02rem; }
+    .feed-item .dek{ display:none; }
+  }
+
+  /* ---------- ARTICLE PAGE ---------- */
+  .back-link{
+    display:inline-block;
+    font-family: var(--font-utility);
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+  }
+
+  .article-kicker{
+    font-family: var(--font-utility);
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--crimson);
+    margin-bottom: 10px;
+  }
+
+  article h1.headline{
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2rem, 6vw, 3.1rem);
+    line-height: 1.08;
+    margin: 0 0 14px 0;
+  }
+
+  .article-byline{
+    font-family: var(--font-utility);
+    font-size: 0.78rem;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 16px;
+    margin-bottom: 22px;
+  }
+  .article-byline .author{ color: var(--crimson); }
+
+  .article-image-wrap{
+    border: 1px solid var(--ink);
+    padding: 5px;
+    background: var(--paper-light);
+    margin-bottom: 8px;
+  }
+  .article-image-wrap img{ width: 100%; }
+  .image-caption{
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    margin: 0 0 28px 0;
+  }
+
+  .article-body{
+    font-size: 1.12rem;
+    line-height: 1.75;
+    max-width: 700px;
+  }
+  .article-body p{ margin: 0 0 1.2em 0; }
+  .article-body p:first-of-type::first-letter{
+    font-family: var(--font-display);
+    font-size: 3.6rem;
+    font-weight: 900;
+    float: left;
+    line-height: 0.8;
+    margin: 6px 8px 0 0;
+    color: var(--crimson);
+  }
+
+  .end-mark{
+    font-family: var(--font-utility);
+    text-align: center;
+    color: var(--ink-soft);
+    letter-spacing: 3px;
+    font-size: 0.8rem;
+    margin: 30px 0;
+  }
+
+  footer{
+    border-top: 5px double var(--rule);
+    padding: 20px 0 40px;
+    text-align: center;
+    font-family: var(--font-utility);
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .empty-state{
+    text-align:center;
+    padding: 60px 20px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  [hidden]{ display:none !important; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="meta-strip">
+      <span id="volLabel">Vol. I, No. 1</span>
+      <span id="todayLabel"></span>
+    </div>
+    <div class="masthead-title">
+      <a href="#/"><h1>Father's Day Free Press</h1></a>
+    </div>
+    <p class="masthead-tagline">Sports Edition</p>
+    <p class="masthead-sub">Stories written by the boys, for Dad &mdash; est. Father's Day 2026</p>
+  </header>
+
+  <main>
+    <div id="homeView">
+      <p class="section-label">Latest Dispatches</p>
+      <div id="feedMount" class="feed"></div>
+    </div>
+
+    <div id="articleView" hidden>
+      <a href="#/" class="back-link">&larr; Back to the Front Page</a>
+      <article id="articleMount"></article>
+    </div>
+  </main>
+
+  <footer>
+    Written and published with love, for Dad &middot; Father's Day Free Press
+  </footer>
+</div>
+
+<script>
+  /* =========================================================
+     ARTICLE DATA
+     Add new articles by appending an object to this array.
+     Fields:
+       id        – unique url slug, no spaces (e.g. "rose-bowl-1998")
+       title     – headline
+       date      – "YYYY-MM-DD" (controls sort order, newest first)
+       author    – author's name as it should display
+       sport     – short label, e.g. "Hockey", "Football"
+       image     – path to image file (put images in assets/images/)
+       caption   – short italic caption under the image
+       excerpt   – 1-2 sentence summary shown on the home page
+       body      – array of strings, one per paragraph
+  ========================================================= */
+  const articles = [
+    {
+      id: "michigan-msu-cold-war-2001",
+      title: `Michigan/MSU Face Off in \u2018Cold War\u2019`,
+      date: "2001-10-06",
+      author: `Joey Joppich`,
+      sport: "Hockey",
+      image: "assets/images/october6-2001.jpg",
+      caption: ``,
+      excerpt: `In a first for collegiate hockey, the Wolverines and Spartans faced off in an epic outdoor game at Spartan Stadium in front of nearly 70,000 fans.`,
+      body: [
+        `In a first for collegiate hockey, the Wolverines and Spartans faced off in an epic outdoor game at Spartan Stadium. In front of a crowd some 70,000-strong, the two teams traded blows throughout the three periods with neither team gaining an advantage of more than one goal.`,
+        `As with most of the matchups between these rivals, the game had its fair share of penalty minutes handed out. The biggest flare of emotions came at 18:44 in the first period when 4 players were sent into the box for a mix of high-sticking and roughing.`,
+        `The action came to a head with 47 seconds to go in the third period when Jim Slater managed to sneak a goal past the Wolverine netminder to tie the game at 3 apiece. Overtime was a comparatively uneventful affair with neither team putting up many quality scoring chances, and the game ended in a 3-3 tie, much to the chagrin of the home team.`,
+        `Mike Cammalleri led the scoring for the Wolverines with 2 goals and an assist. When asked about the results of the game, an anonymous local 6-month-old Michigan fan astutely noted \u201cgoo goo gah gah.\u201d`,
+        `Fans are now wondering whether the teams will meet again in another outdoor match, this time at the larger and more famous \u201cBig House\u201d in Ann Arbor. This reporter might offer the name \u201cThe Big Chill\u201d as a title for the game. In the meantime, the two teams will meet again in January at Yost for another opportunity to prove who owns the rivalry this year.`
+      ]
+    },
+    {
+      id: "red-wings-stanley-cup-2002",
+      title: `Red Wings Win the Stanley Cup`,
+      date: "2002-06-13",
+      author: `Tommy Joppich`,
+      sport: "Hockey",
+      image: "assets/images/june13-2002.jpg",
+      caption: ``,
+      excerpt: `After falling to the Kings the year before, the Red Wings stormed back in 2002, sweeping four straight from Carolina to bring the Stanley Cup home to Detroit.`,
+      body: [
+        `June was already about to become a great month, but 2002 made it come one year early for Red Wings fans. After a shocking upset by the Kings the year prior, Wings fans anticipated some level of a comeback story heading into the 2002 season.`,
+        `Acquiring future hall-of-famer Pavel Datsyuk (among other players) would lead to a great playoff run culminating in a Stanley Cup showdown against the \u201cworse on paper\u201d Carolina Hurricanes. Stunning the Red Wings in OT in game 1, the Hurricanes looked poised to bring Wings fans another sad ending.`,
+        `But the Red Wings must have set some sort of plan up in the locker room and aptly named it the \u201cYzerplan\u201d or something, because their offense scored 3 times each game for the next four games straight. This plan set them up for defensive success in order to sweep up 4 straight victories over the Canes to take home the Cup for Detroit!`,
+        `During an interview with soon-to-be super-fan Joseph \u201cJoey\u201d Joppich, he said \u201cadghh beeehhh\u201d about the victory. The Red Wings\u2019 Stanley Cup summarized such a great season, roster, and fanbase into one trophy.`
+      ]
+    },
+    {
+      id: "the-game-never-disappoints-2003",
+      title: `\u2018The Game\u2019 Never Disappoints`,
+      date: "2003-11-22",
+      author: `Joey Joppich`,
+      sport: "Football",
+      image: "assets/images/november22-2003.jpg",
+      caption: ``,
+      excerpt: `Behind a record crowd of 112,118, Michigan held off Ohio State 35-21 to clinch the rivalry win and a share of the Big Ten title.`,
+      body: [
+        `Under intense pressure, the Michigan football team rose to the occasion yet again under the brightest spotlight they have faced this season. With the top 5 matchup taking over the hearts and minds of local Michiganders, the Wolverines took the field led by wide receiver Braylon Edwards and quarterback John Navarre.`,
+        `The two would end up combining for multiple touchdowns during the back-and-forth affair. In front of a record attendance of 112,118 screaming fans, Michigan jumped out to an early lead in the 1st quarter.`,
+        `Asked about the energy for this game, one local mom noted \u201cI have a 5-month-old and a two-year-old at home, as if we needed any more energy in this household!\u201d`,
+        `While the Buckeyes managed to keep things interesting, the home team never lost the lead, ultimately clinching a rivalry win and a Big Ten championship with a final score of 35-21. The Wolverines will go on to play the USC Trojans in the Rose Bowl on January 1.`
+      ]
+    },
+    {
+      id: "pistons-nba-title-2004",
+      title: `Pistons Stun the Lakers for the NBA Title`,
+      date: "2004-06-15",
+      author: `Tommy Joppich`,
+      sport: "Basketball",
+      image: "assets/images/june15-2004.jpg",
+      caption: ``,
+      excerpt: `A feisty, defense-first Pistons squad shocked Kobe, Shaq, and the star-studded Lakers, closing out the 2004 NBA Finals in five games.`,
+      body: [
+        `Kobe Bryant, Shaquille O\u2019Neil, Karl Malone - all names you think of when you think \u201cChampion\u201d. However, the feisty and talented Pistons lineup would call them something else after the 2004 NBA Finals.`,
+        `The game plan was simple: defense. Anxious fans watched from their homes in random Detroit suburbs like Lake Orion, Michigan, as the Pistons dominated the first four games of the series, taking a stunning 3-1 victory over the Los Angeles Lakers\u2019 star-studded lineup.`,
+        `Let\u2019s go down to the court for a quick play-by-play from our courtside reporter: \u201cThe player takes the ball down the court, dribbles between his legs, passes it, it\u2019s caught, and a lay-up is scored!\u201d Wow, I feel like I\u2019m there!`,
+        `Anyway, the Pistons managed to do this about 44 times (they only scored 4 three-pointers) in their 100-87 victory to clinch the finals over the Lakers, taking home the title for Detroit. Basketball fans and basketball foul-arguers alike can surely agree, this \u201904 Pistons team will forever go down as one of the best in city history.`
+      ]
+    },
+    {
+      id: "pudge-home-run-derby-2005",
+      title: `\u2018Pudge\u2019 Puts on a Show at Home Run Derby`,
+      date: "2005-07-11",
+      author: `Joey Joppich`,
+      sport: "Baseball",
+      image: "assets/images/july11-2005.jpg",
+      caption: ``,
+      excerpt: `Comerica Park hosted its first All-Star Weekend, and hometown catcher Ivan \u201cPudge\u201d Rodriguez gave the crowd a Home Run Derby run to remember.`,
+      body: [
+        `When Comerica Park opened at the turn of the millennium, many locals hoped that it would soon serve as a go-to spot for all-star games, concerts, and maybe even World Series games. While we are still waiting on that last one (maybe next year!) Comerica Park was able to check the first milestone off that list with its holding of All-Star Weekend this year.`,
+        `The highlight for many fans was the performance of Detroit\u2019s-own Ivan \u201cPudge\u201d Rodriguez in the Home Run Derby. After barely sneaking past the first round with 7 home runs, Pudge led the pack with 8 home runs in round two. He ultimately failed to best the eventual winner Bobby Abreu of the Philadelphia Phillies in the finals by a score of 11-5.`,
+        `The home crowd made their appreciation of the hometown catcher well-known, though, as he received a standing ovation as he exited the field. Asked afterwards about his performance, Rodriguez shouted out some of his biggest fans, saying \u201cthis one\u2019s for you, Joppich boys.\u201d`,
+        `As the only Tigers representative playing in the All-Star game tomorrow, Rodriguez will be sure to get a healthy welcome tomorrow from the home town fans as well.`
+      ]
+    },
+    {
+      id: "ordonez-walkoff-tigers-2006",
+      title: `Magglio Ordonez\u2019s Walk-Off Sends the Tigers to the World Series`,
+      date: "2006-10-14",
+      author: `Tommy Joppich`,
+      sport: "Baseball",
+      image: "assets/images/october14-2006.png",
+      caption: ``,
+      excerpt: `Three years removed from a 119-loss season, the Tigers rode a Magglio Ordonez walk-off home run to their first World Series trip in 22 years.`,
+      body: [
+        `The day is October 14th, the last time the Detroit Tigers saw the hallowed grounds of the World Series was 22 years prior during the \u201cRoar of \u201984\u201d. With two runners on in the bottom of the ninth, Magglio Ordonez stepped up to the plate.`,
+        `Just three years ago, the Tigers had suffered an astounding 119-loss season. The first pitch goes by Ordonez. Manager Jim Leyland was brought in to alleviate the pain of Tigers fans throughout the state of Michigan. The second pitch is fouled back by Ordonez.`,
+        `Comerica Park has yet to see a playoff run as deep as this team has gone. The third pitch is taken for a ball by Ordonez. The score in this game is 3-3, with the Oakland A\u2019s hoping to hold off the surging Tigers from sweeping them.`,
+        `The fourth pitch is cranked down the left field line by Ordonez! Hooking, hooking, will it stay fair? The Joppiches stand up and lean further to the right than they ever have before. GONE! Ordonez walks it off for the Tigers send them to their first World Series in 22 years.`,
+        `\u201cThis is the best day of my entire life,\u201d said young fan Joey Joppich, of southeast Michigan, \u201cit can\u2019t get any better than this!\u201d`
+      ]
+    },
+    {
+      id: "lake-orion-guardian-angels-2007",
+      title: `Lake Orion Guardian Angels Finish Undefeated Regular Season`,
+      date: "2007-05-24",
+      author: `Joey Joppich`,
+      sport: "Baseball",
+      image: "assets/images/may24-2007.png",
+      caption: ``,
+      excerpt: `The Lake Orion Guardian Angels tee ball team closed out an undefeated season \u2014 0 wins, 0 losses, 12 ties \u2014 on a bases-loaded, game-tying double.`,
+      body: [
+        `\u201cGuardian Angel Mania\u201d has swept Lake Orion this spring as the local tee ball team has put together a run for the ages. Led by their star first basemen/center fielder/third baseman/second baseman/right fielder/pitcher/shortshop/left fielder Joey Joppich, the Angels put up their best game of the season.`,
+        `With a tight 20-19 game going into the last inning, the bases quickly loaded for Joppich. Timing the ball perfectly, Joppich launched a ball into the gap between pitcher and third base. The opposing left fielder ran in to field the ball, but it was too late, as Joppich had already managed to find his way halfway to first.`,
+        `Before the adoring fans in the stands knew what happened, the Angel\u2019s runner had found his way to home plate and the umpire called the game a 20-20 tie, extending the home team\u2019s lossless streak to 12 with a final season tally of 0-0-12.`,
+        `Asked for comment after the game, Joppich had this to say: \u201cI couldn\u2019t have done this without the help of my Dad. I think I might try machine pitch next year!\u201d`
+      ]
+    },
+    {
+      id: "lions-0-16-season-2008",
+      title: `Lions Complete the Only 0-16 Season in NFL History`,
+      date: "2008-12-28",
+      author: `Tommy Joppich`,
+      sport: "Football",
+      image: "assets/images/december28-2008.jpg",
+      caption: ``,
+      excerpt: `The Lions closed out a 31-21 loss to Green Bay to become the first team in NFL history to finish a season 0-16.`,
+      body: [
+        `There\u2019s often a right side of history to be on when it comes to sports. Cementing your team by breaking records and marking your organization as \u201cthe first ever-\u201d is often sought after yearly by managers, players, and owners alike.`,
+        `The 2008 Lions, however, would have done anything to avoid the record book they were about to place themselves in. Three days after Christmas day in 2008, Detroit Lions fans - or what\u2019s left of them - eagerly await the start time of their final game of the season against the Green Bay Packers. The Lions are one game away from making history. Their goal? Just don\u2019t lose.`,
+        `Brown paper bags are passed throughout the stadium to loyal season-ticket holders who cannot bear to show their face in front of this team. From the perspective of a 5-year-old, the Lions jerseys looked better, but their players were not as good. Sometimes the old fable \u201clook good, play good\u201d does not hold true.`,
+        `It was on December 28, 2008 that the Detroit Lions officially found themselves in NFL history books forever, not by beating the Green Bay Packers, though. The Lions lost 31-21 becoming the first team ever to go 0-16 in the National Football League.`,
+        `What do fans do now? Well, there\u2019s nowhere for these Lions to go but up! It\u2019s a matter of how long \u2018til the paper bags come up too.`
+      ]
+    },
+    {
+      id: "lions-greatest-game-nobody-saw-2009",
+      title: `Lions Complete Comeback in \u2018Greatest Game Nobody Saw\u2019`,
+      date: "2009-11-22",
+      author: `Joey Joppich`,
+      sport: "Football",
+      image: "assets/images/november22-2009.jpg",
+      caption: ``,
+      excerpt: `A blacked-out game few fans could even watch turned into an instant classic as rookie QB Matthew Stafford, throwing through a dislocated shoulder, won it for the Lions at the buzzer.`,
+      body: [
+        `The \u201cLowly Lions\u201d as some locals tend to refer to our hometown football team, played on Sunday, much to the surprise of many Americans. Due to local blackouts, the game was broadcast over the radio and only a handful of local stations, leading to a near record-low viewership. The NFL must be regretting that decision as the combined 2-16 Browns and Lions put together a game for the ages.`,
+        `The Browns pulled out to a 24-3 lead by the late first quarter before Detroit managed to narrow the deficit to three points by halftime. The action really came to a head late in the fourth quarter with the Lions trailing 37-31.`,
+        `Led by rookie quarterback Matthew Stafford, the Lions marched 88 yards down the field to set up a goal to go situation with two seconds on the clock. Stafford\u2019s pass was intercepted in the end zone as time expired, however a late flag for pass interference set up one final play.`,
+        `Stafford was sandwiched on the play by two Browns linemen leading to a dislocated left shoulder, but an ill-advised timeout by Cleveland allowed him back in the game. After a mic\u2019ed up moment caught Stafford telling the coaches he could \u201cthrow the ball\u201d if they needed him to, he rejoined the huddle.`,
+        `With the clock reading 0:00, Stafford connected with receiver Brandon Pettigrew to tie the game. Kicker Jason Hanson knocked in the game-winning extra point, and 65,000 Detroit fans went home happy. Asked after the game whether he was content with the results, one local father of two boys said \u201cwish I could have seen it. Well, at least they won\u2019t be 0-16 this year, hopefully my boys are young enough to forget that.\u201d`,
+        `The Lions will try to make it 3-8 on the season next Thursday on the Thanksgiving Day game against the Packers.`
+      ]
+    },
+    {
+      id: "galarraga-28-out-2010",
+      title: `Armando Galarraga\u2019s \u201c28-Out\u201d Almost-Perfect Game`,
+      date: "2010-06-02",
+      author: `Tommy Joppich`,
+      sport: "Baseball",
+      image: "assets/images/june2-2010.jpg",
+      caption: ``,
+      excerpt: `Armando Galarraga retired 27 batters in a row, only to be robbed of a perfect game by a blown call at first base \u2014 and handled it with remarkable grace.`,
+      body: [
+        `Just eight days before the anniversary of the greatest day ever, on June 2, 2010, the Detroit Tigers faced off against Cleveland in an early season divisional matchup. Armando Gallaraga, a three-year veteran for the Tigers, started on the bump.`,
+        `The game started off ordinary - a couple of good innings from Gallaraga, a solo home run from Miguel Cabrera, and a neck-and-neck battle between rivals. However, as the fifth-inning turned to the sixth turned to the seventh, Tigers fans began to realize that Gallaraga was having a great game.`,
+        `Not just a great game, an exceptional game. Not just an exceptional game, an extraordinary game. Not just an exceptional game, an exquisite game. Not just an exquisite game, a perfect game. Gallaraga had not let a single base runner on base yet.`,
+        `Through eight innings, Gallaraga had seen 24 hitters, all of which returned to the dugout immediately after their at bats. Only 20 pitchers had ever achieved the ever-so-elusive perfect game. His teammates did not acknowledge him, the coaches left him be, but the Cleveland players had one goal in mind: get a hit.`,
+        `In the bottom of the 8th the Tigers added on two more runs getting Gallaraga an even larger three-run cushion for his outing. In the top of the ninth, the first Cleveland hitter pounded the ball deep to center where Austin Jackson made a perfect-game-saving over the shoulder catch. Gallaraga acknowledged him, but stayed focused on the task ahead and retired the next hitter to get to 26 outs in a row.`,
+        `That\u2019s when Jason Donald stepped to the plate, a speedy runner, ready to challenge Gallaraga one last time. Donald made about as weak of contact as possible, hitting an easily-fieldable ground ball to Miguel Cabrera\u2019s right side at first base. He picked it up, and tossed it to Gallaraga covering first base - they did it! But no. Veteran umpire Jim Joyce looked like he was going to call the runner out, but switched to a safe call at the last second.`,
+        `A full-half step ahead of the runner was Gallaraga, who could not believe he had just been booted out of the history books. He re-approached the mound he was no longer meant to be out, retired the 28th batter he faced, and arguably created a new category of his own: \u201cThe 28-out Imperfect Game\u201d.`
+      ]
+    },
+    {
+      id: "crush-leaping-grab-2011",
+      title: `Hero Center Fielder Makes Leaping Grab to Seal a Win for Crush`,
+      date: "2011-06-10",
+      author: `Joey Joppich`,
+      sport: "Baseball",
+      image: "assets/images/june10-2011.png",
+      caption: ``,
+      excerpt: `Eight-year-old Tommy Joppich, playing up an age group for the 9U Crush, sealed a tense crosstown win over the Orion Chargers with a leaping catch in the outfield.`,
+      body: [
+        `The 9U Crush have a new face and he\u2019s already making a big splash for the team. 8-year-old Tommy Joppich (playing \u201cup\u201d for his age group) has taken the North Oakland Baseball Federation by storm, racking up game after game of strong performances. Joppich is able to play every position on the field, taking reps everywhere from pitcher to shortstop.`,
+        `In their recent game against the Orion Chargers, Joppich started the game at third base before transitioning to the outfield. As traditional crosstown rivals, the game was tense between the youngsters, and it came down to the last play.`,
+        `To clinch the final out, Joppich (pictured) made a leaping grab with his feet almost leaving the ground to catch a line drive off the opposing team\u2019s bat. Interviewed after the game, the only comment Joppich had was a question: \u201ccan we get ice cream?\u201d`,
+        `While it is unknown whether the budding superstar got his wish, one thing that we do know is that the Crush will finish their season with a tournament in the small town of Frankenmuth later this month.`
+      ]
+    },
+    {
+      id: "tigers-clinch-alcs-2012",
+      title: `Local Neighborhood Awakens to Cries of Joy`,
+      date: "2012-10-18",
+      author: `Joey Joppich`,
+      sport: "Baseball",
+      image: "assets/images/october18-2012.jpg",
+      caption: ``,
+      excerpt: `As the Tigers swept the Yankees to reach the World Series, two young brothers in Lake Orion celebrated just as loudly as the crowds downtown.`,
+      body: [
+        `While a crowd 47,000 strong was joined by tens of thousands of other revelers on the streets of downtown Detroit in the late evening hours to celebrate the fourth straight victory of the hometown Tigers over the New York Yankees, two young boys were heard adding their voices to the chorus in the suburb of Lake Orion.`,
+        `\u201cThe Tigers are going to the World Series!\u201d was the refrain that was heard as the boys came streaming out their front door. Rumors swirled that the two were granted special privileges to stay up well past their bedtime to watch their favorite team attempt to return to the October Classic.`,
+        `It\u2019s unlikely the two would have been able to sleep much anyways. Along with the rest of the state, the self-proclaimed \u201cbiggest Tigers fans ever\u201d will await the winner of the NLCS as they seek their first World Series championship since 1984.`
+      ]
+    },
+    {
+      id: "michigan-basketball-trey-burke-2013",
+      title: `Local Dad Might Actually Have to Start Caring about Michigan Basketball`,
+      date: "2013-03-27",
+      author: `Joey Joppich`,
+      sport: "Basketball",
+      image: "assets/images/march27-2013.jpg",
+      caption: ``,
+      excerpt: `Trey Burke\u2019s improbable half-court heave forced overtime against Kansas in the Sweet Sixteen \u2014 and finally got a basketball-skeptical local dad to start paying attention.`,
+      body: [
+        `After a 16-0 start to the season, the wheels seemed like they were falling off for John Beilein\u2019s Michigan basketball team. After an early exit from the Big Ten Tournament led to a 4-seed for the preseason #5 team, it seemed that a prominent local father known for his aversion to basketball might manage to avoid any emotional investment in the sport for another year.`,
+        `That is, until point guard Trey Burke entered the picture. Down 10 points to the 1-seed Kansas Jayhawks with 2:52 to go in the second half of the Sweet Sixteen game, many thoughts turned to next season, and children began to be distracted by things like foosball in a neighbor\u2019s basement.`,
+        `Burke then managed to score 8 unanswered points to narrow the gap, putting the Wolverines in a position to make things interesting. As the gap narrowed, superstition kicked in for many, and those same kids were banned from returning to watch.`,
+        `When Burke hit a half-court heave as time expired to send the team to overtime, even that prominent local father had to take notice. Reports indicate that he may even clear time in his schedule to watch the upcoming Elite Eight game against the Florida Gators.`
+      ]
+    },
+    {
+      id: "tigers-al-central-4th-2014",
+      title: `Tigers Clinch Their 4th Straight AL Central Title`,
+      date: "2014-09-28",
+      author: `Tommy Joppich`,
+      sport: "Baseball",
+      image: "assets/images/september28-2014.jpg",
+      caption: ``,
+      excerpt: `Pushed to the final day of the season by Kansas City, the Tigers shut out Minnesota 3-0 to clinch their fourth straight AL Central title.`,
+      body: [
+        `Young baseball players from around the state of Michigan have grown up with the privilege of emulating some of the great players from the Detroit Tigers team of the decade. With great pitchers like Justin Verlander, Max Scherzer, and newly-acquired David Price, as well as star-studded hitters like Miguel Cabrera, Victor Martinez, and firecracker Nick Castellanos, the Tigers and their fans were ready for another season of playoff baseball.`,
+        `However, even after winning three AL Central titles in a row, the 2014 season would come down to one final game on September 28, 2014. The Kansas City Royals were pushing back against the Tigers\u2019 dominant reign, and with a loss in this final game of the season to divisional foe Minnesota, the Tigers would drop to second place in the Central.`,
+        `However the new additions of David Price and right-handed bat Ian Kinsler were not about to let that happen. One might say the Twins never stood a chance. Rookie manager Brad Ausmus brought out all the stops pitching-wise, with none of his pitchers allowing a single run. Kinsler and fellow All-Stars produced three runs for the team as well, allowing for a no-drama 3-0 finish to the game.`,
+        `The 90-72 Tigers maintained their lead against the 89-73 Kansas City Royals, clinching their 4th straight AL Central title in a row - the first team to do it since C%^*#@(! from 1995 to 1999. That means the Tigers will go further than the Royals in the post season FOR SURE, and I hope the Giants who were mean to the Tigers in 2012 don\u2019t make it either!`
+      ]
+    },
+    {
+      id: "brothers-cyo-basketball-2015",
+      title: `Brothers Take CYO World by Storm`,
+      date: "2015-11-30",
+      author: `Joey Joppich`,
+      sport: "Basketball",
+      image: "assets/images/november30-2015.png",
+      caption: ``,
+      excerpt: `With brother Tommy now starting for St. Joseph\u2019s sixth-grade team, the Joppich boys took over the CYO basketball circuit together for the first time.`,
+      body: [
+        `After dominating the middle school Catholic basketball circuit for two years, eighth-grade phenom Joey Joppich has company in the form of his brother, Tommy Joppich. The younger brother entered the middle school league this year after a successful fifth-grade season saw him placed in the starting 5 for the sixth-grade St. Joseph School team this year.`,
+        `Following in the footsteps of his older brother, Tommy has already led his team to a Thanksgiving tournament championship. When asked about his signature move, Tommy explained \u201cI just dribble hard to the basket, jump, throw the ball near the rim, and fall onto the court. Then I get to shoot two free throws!\u201d`,
+        `Joey, who is now coming off the bench where he averages a whopping 2.3 points per game, expressed pride in his brother\u2019s efforts. \u201cHe spends more time on his back than his feet, but it works!\u201d he exclaimed.`,
+        `Even their dad, who did not understand much basketball prior, is impressed. \u201cThere\u2019s a lot more physicality than I thought! It\u2019s kind of like hockey,\u201d he said, excitedly. The Joppich boys continue their seasons against rivals Marist later this week.`
+      ]
+    },
+    {
+      id: "joppich-qb-debut-st-joseph-2016",
+      title: `Joppich Stuns in Quarterbacking Debut for St. Joseph Mavericks`,
+      date: "2016-09-02",
+      author: `Tommy Joppich`,
+      sport: "Football",
+      image: "assets/images/september2-2016.jpg",
+      caption: ``,
+      excerpt: `With starting QB Grant sidelined by a broken arm, Tommy Joppich got his first start under center for the St. Joseph Mavericks \u2014 shotgun snaps and all.`,
+      body: [
+        `The St. Joseph Mavericks have always been underdogs. A 22 person graduating 8th grade class with only 11 boys, the team struggles to pull 7th and 8th graders from their own school, let alone players from public schools in the area who are now eligible for their middle school teams. However, somehow they manage, and find themselves playing each week with heart and determination to show these larger schools they can fight.`,
+        `Unfortunately, however, coach\u2019s son and quarterback Grant went down with a broken arm the game prior, which leads us to Joppich\u2019s first start at the helm of this St. Joseph offense (while simultaneously playing punter and cornerback as well).`,
+        `I had the opportunity to talk to Joppich this week in practice where he said \u201cHonestly, the hardest part of the game at quarterback has been taking undercenter snaps properly. Don\u2019t tell the other team, but we\u2019ll probably be in shotgun a lot.\u201d A good coaching decision from what I saw in practice as he fumbled many - and I mean MANY - times under center.`,
+        `Center David Nemmert was unphased going from under center to shotgun, and was able to deliver Joppich the ball seamlessly for all pass, punts, and mostly run plays. Completing one long touchdown pass in the game to tight end Trevor Tuttle, Joppich finished the game with a respectable statline on the ground and a fairly average air game as well. His fear of getting hit hard is evident, but the kid has heart and will probably start working out in high school or something.`
+      ]
+    },
+    {
+      id: "red-wings-final-night-joe-2017",
+      title: `Red Wings Pull Out Win on Final Night at \u2018The Joe\u2019`,
+      date: "2017-04-09",
+      author: `Joey Joppich`,
+      sport: "Hockey",
+      image: "assets/images/april9-2017.jpg",
+      caption: ``,
+      excerpt: `The Red Wings closed out 38 years at Joe Louis Arena with a 4-1 win over New Jersey, played in Henrik Zetterberg\u2019s 1000th career game.`,
+      body: [
+        `An extremely emotional crowd ended an extremely notable season on a solemn high note today. The Detroit Red Wings managed to pull out a win when it mattered most after a season where they were hard to come by. After 25 years straight of playoff appearances, the Red Wings were shut out after their 14th place finish in the Eastern Conference. The end of that streak was overshadowed by the end of their 38-year streak of seasons played in Joe Louis Arena.`,
+        `The game was eventful for the 21,000-strong crowd. The game fittingly served as the 1000th career game for captain Henrik Zetterberg, and the final goal was scored by none other than Riley Sheahan en route to a 4-1 win over the New Jersey Devils.`,
+        `Many fans are upset by the move to the upcoming Little Caesars Arena this fall. One found after the game identified only as the city attorney of Farmington Hills claimed \u201cI have been a fan all my life, but I\u2019m not sure if I\u2019ll ever go to a game again.\u201d Let\u2019s just hope this move doesn\u2019t curse the Red Wings for the next 10 years with a playoff drought.`
+      ]
+    },
+    {
+      id: "ndp-jv-baseball-tournament-2017",
+      title: `NDP JV Baseball Team Wows at Unknown Tournament`,
+      date: "2017-04-29",
+      author: `Joey Joppich`,
+      sport: "Baseball",
+      image: "assets/images/april29-2017.png",
+      caption: ``,
+      excerpt: `The NDP JV baseball team, led by pitcher Joey Joppich, brought home a trophy from a tournament at a field nobody could quite identify.`,
+      body: [
+        `Hoisting a trophy in the air and flashing \u201c#1\u201d with big smiles, the NDP JV team won a tournament this weekend at a field with a grass infield and high outfield fence. Probably led by pitcher Joey Joppich, the team brought home some hardware after what looks to be a cold weekend for the boys.`,
+        `When interviewed after the game, Joppich\u2019s Dad expressed a similar sentiment, \u201cI don\u2019t know where we are, how we got here, or what happened, but I do know one thing: I\u2019m proud of my son.\u201d And isn\u2019t that what this is all about?`
+      ]
+    },
+    {
+      id: "michigan-basketball-loyola-final-four-2018",
+      title: `Michigan Basketball Topples Cinderella Loyola-Chicago in the Final Four`,
+      date: "2018-03-31",
+      author: `Tommy Joppich`,
+      sport: "Basketball",
+      image: "assets/images/march31-2018.jpg",
+      caption: ``,
+      excerpt: `Mo Wagner\u2019s 24 points and 17 rebounds powered Michigan past Sister Jean and Cinderella Loyola-Chicago, 69-57, and into the national championship game.`,
+      body: [
+        `What a legendary team to fall in love with as a young sports fan. Zavier Simpson, Jordan Poole, Mo Wagner, Charles Mathews, Duncan Robinson, Muhammad-Ali Abdur-Rakhman, and Isaiah Livers - all led by Jon Beilein at the helm. This squad was the unstoppable force on a 13-game win streak that ran into an immovable object known as the Loyola University Ramblers.`,
+        `The Curse of the Bambino, the Madden Curse, the Curse of the Billy Goat: all well-known curses that strike players across different sports. On the other side of that coin sits Sister Jean. Since the famed Catholic became a Ramblers sports-game staple, they have gone on to have one of - if not the most prolific run of any \u201clow-to-mid D1\u201d basketball team in recent history.`,
+        `Catholics across the country are pushing for the Ramblers, while Michigan fans across the country are pushing back. Catholic Michigan fans, however? They would love for both teams to stay injury free with a close Michigan victory. And those fans were the real winners on March 31, 2018.`,
+        `The Ramblers pulled out to an early lead, stretching it to 10 points at the largest gap. But the Wolverines tied it up with just under 7 minutes to go in the second half. Led by future NBA star Mo Wagner\u2019s 24 points and 17 rebounds (putting him in Final Four history with Hakeem Olajuwon and Larry Bird), the Wolverines pulled out the 69-57 victory and look to book their first championship since 1989 - who knows when they\u2019ll get an opportunity to do this again!`
+      ]
+    },
+    {
+      id: "bocce-ball-tournament-2018",
+      title: `Dynamic Duo Stuns Competition at Annual Bocce Ball Tournament`,
+      date: "2018-06-29",
+      author: `Tommy Joppich`,
+      sport: "Recreation",
+      image: "assets/images/june29-2018.jpg",
+      caption: ``,
+      excerpt: `Fifteen-year-old Tommy Joppich and his dad, Steve, fought through a cutthroat bracket at Crystal Mountain to become just the fourth father-son duo to win the annual Bocce Ball tournament.`,
+      body: [
+        `Recently 15-year-old Tommy Joppich alongside veteran Bocce Baller Dad Steve were a force to be reckoned with last Saturday in Crystal Mountain. I made my way out there to cover this annual showdown on the grass as I heard it was not an event to be missed.`,
+        `Looking through the rules, this event is cut throat. Teams cannot mess up in this single elimination bracket, and have the chance of getting sent home if they match up with a tough opponent early in the bracket. The Joppich family submitted two entries to the tournament, but unfortunately Mom Jennifer and oldest son Joey found themselves knocked out with the aforementioned duo left fighting for the trophy.`,
+        `Tommy found himself matching up against successful lawyers, husbands, and wives from around the state all showing no mercy despite his hands being smaller than the balls he was tossing across the playing surface. Nonetheless, this Joppich duo caught fire and found themselves in the finals against the McGees (I think).`,
+        `After an initial back-and-forth start, things turned up all Joppich as they found their names engraved in history this past weekend. They become just the fourth father-son duo - the first in over 5 years - and Tommy becomes the youngest person with his name on the trophy. What a day! Now back to reporting the Traverse City Cherry Spitting Competition.`
+      ]
+    },
+    {
+      id: "ndp-jv-baseball-tournament-2019",
+      title: `NDP JV Team Wins Yet Another Unknown Tournament`,
+      date: "2019-05-05",
+      author: `Joey Joppich`,
+      sport: "Baseball",
+      image: "assets/images/may5-2019.png",
+      caption: ``,
+      excerpt: `Two years after the 2017 team\u2019s mystery-tournament title, the NDP JV baseball team \u2014 this time led by Tommy Joppich \u2014 won an unknown tournament all over again.`,
+      body: [
+        `Almost two years to the day after their predecessors won an unknown tournament, this year\u2019s NDP JV baseball team has won yet another unknown tournament. By another random coincidence, the younger brother of one of the stars on the 2017 was a leader player for the team this year.`,
+        `Taking after their seniors, the boys of this year\u2019s team were seen flashing \u201c#1\u201d signs while holding a somewhat smaller trophy from this year\u2019s unknown tournament. The same father from 2017 was found and interviewed again and had this to say: \u201csomehow I still don\u2019t know where I am. Is it the same place? Somewhere different? Who\u2019s to say?\u201d`
+      ]
+    },
+    {
+      id: "spikeball-club-2019",
+      title: `Spikeball Takes Over Hearts and Minds of Local College Students`,
+      date: "2019-11-09",
+      author: `Joey Joppich`,
+      sport: "Spikeball",
+      image: "assets/images/november9-2019.png",
+      caption: ``,
+      excerpt: `Freshmen Joey Joppich and Alex Deck turned Spikeball into one of the hottest new club sports on Michigan\u2019s Central Campus, signing up over 300 students.`,
+      body: [
+        `After signing up over 300 fellow students, freshmen Joey Joppich and Alex Deck have formed a team and taken them to a tournament out-of-state in an impressive showing for one of the newest athletic options for University of Michigan students. Spikeball, also known by its formal name of roundnet, has been drawing huge crowds to wide-open fields all fall on Central Campus.`,
+        `Joppich and Deck have had to scramble to put together enough nets and find enough space for the burgeoning club. \u201cWe were excited to take a team to Notre Dame and play some other schools, we just had no idea how to get everyone there,\u201d Joppich explained.`,
+        `The team played well at the tournament in their makeshift uniforms. \u201cWe made a run to the M Den and had each pair buy matching shirts,\u201d Joppich said, \u201cwe will be better prepared in the future.\u201d For now, the team will likely hibernate during the Michigan winter, but they plan to be back next Spring better than ever.`
+      ]
+    },
+    {
+      id: "the-game-2020-what-if",
+      title: `\u201cThe Game\u201d Doesn\u2019t Happen, but What If It Did?`,
+      date: "2020-12-21",
+      author: `Tommy Joppich`,
+      sport: "Football",
+      image: "assets/images/december21-2020.jpg",
+      caption: ``,
+      excerpt: `When COVID forced the cancellation of the 2020 Michigan-Ohio State game, this reporter decided to imagine how it would have gone anyway.`,
+      body: [
+        `Michigan vs. the other team that I don\u2019t care about is the most heated rivalry in college football. Each year the teams center their season plan and strategy around each other, marking their calendar for this special day and opportunity right when the schedule comes out.`,
+        `In a year like this one with COVID, however, the college football scene is left shaky week after week with uncertainty around each scheduled game. Many games are cancelled in advance, teams are hoping to encounter less and less different schools, but December 12th remains on the calendar for each of these two teams.`,
+        `Unfortunately for players, coaches, and fans, though, on December 8th The Game is officially called off. Double-unfortunately for the Michigan fanbase, the other dumb stupid team goes on and wins the National Championship, too*.`,
+        `Sometimes I like to imagine how The Game would have gone, though, had they played. A struggling Michigan team comes out, punches the red guys in the mouth, then kicks them while they\u2019re down. Players chirp, field goals exchanged. Michigan has nothing to lose, while the other team has everything to lose.`,
+        `I could see a final score of 13-10 in favor of the Wolverines or something like that. Not sure if anything like that would ever happen, but if it did it would be pretty sweet!`
+      ]
+    },
+    {
+      id: "killer-bees-robotics-2021",
+      title: `Killer Bees Get an \u2018A\u2019 for Robot Design`,
+      date: "2021-01-14",
+      author: `Joey Joppich`,
+      sport: "Robotics",
+      image: "assets/images/january14-2021.png",
+      caption: ``,
+      excerpt: `Senior Tommy Joppich proved he was more than just an athlete, helping lead the NDP Killer Bees robotics team at this year\u2019s Vex Robotics tournament.`,
+      body: [
+        `Led by seniors Tommy Joppich and Josh Samuels, the Killer Bees robotics team from NDP showed just how competitive and exciting technology could be. Joppich, better known for his athletic prowess, showed he\u2019s more than just a jock with his performance at this year\u2019s Vex Robotics tournament.`,
+        `When interviewed in the stands, Joppich\u2019s family expressed uncertainty about the sport. \u201cWe are here to support Tommy,\u201d his brother stated to nods of agreement from his parents. When asked if they knew how the team was doing, Tommy\u2019s brother re-iterated \u201cwe are here to support Tommy.\u201d`,
+        `Regardless, the skills learned at tournaments like this will serve the Killer Bees well in their future roles in technology and engineering.`
+      ]
+    },
+    {
+      id: "michigan-monkey-off-back-2021",
+      title: `Michigan Gets the Proverbial \u2018Monkey\u2019 off Its Back`,
+      date: "2021-12-04",
+      author: `Joey Joppich`,
+      sport: "Football",
+      image: "assets/images/december4-2021.png",
+      caption: ``,
+      excerpt: `An 11-1 Michigan team rolled past Iowa 42-3 in the Big Ten Championship, with brothers Tommy and Joey Joppich in the Indianapolis stands to see it.`,
+      body: [
+        `\u201c2020 who?\u201d was the refrain from Michigan fans throughout Indianapolis this weekend. After a wildly historic 11-1 season that saw Michigan (finally) beat their unnamed archrival for the first time in an unspecified number of years, Michigan capped it off with a spot in the Big Ten Championship game.`,
+        `Tens of thousands of Michigan fans hungry for another win made the trip down US-24 from Ann Arbor. Included were brothers Tommy and Joey Joppich. \u201cOur Dad raised us to be hardcore Michigan fans, so we wouldn\u2019t miss this for the world,\u201d explained Joey. \u201cHe always taught us to hold out hope that our best years were ahead of us,\u201d added Tommy.`,
+        `The Iowa Hawkeyes met the Wolverines on the field but were unable to match the firepower head coach Jim Harbaugh was able to produce, ultimately falling 42-3 to the playoff-bound Wolverines. Michigan was able to spread the ball around generously, but some highlights included a big run by running back Blake Corum, two touchdowns by star of \u201cThe Game\u201d Hasan Haskins, and a miraculous catch by freshman wide receiver Roman Wilson.`,
+        `\u201cAnything after this is just icing on the cake,\u201d the Joppich boys said in unison after the game before heading off to sing \u201cHail to the Victors\u201d all the way home.`
+      ]
+    },
+    {
+      id: "michigan-wins-columbus-2022",
+      title: `Michigan Finally Wins in Columbus`,
+      date: "2022-11-26",
+      author: `Tommy Joppich`,
+      sport: "Football",
+      image: "assets/images/november26-2022.jpg",
+      caption: ``,
+      excerpt: `Donovan Edwards broke off two long fourth-quarter touchdowns as Michigan finally won in Columbus, snapping a long drought in the rivalry.`,
+      body: [
+        `After both Joppich brothers were finally at the University of Michigan together creating an undeniable powerhouse of a 12th-man for the football team, the team has to face the B*(&$@(@#$& for the first time without the brothers in attendance. \u201cAn away game like this is undeniably daunting,\u201d said cornerback Mikey Sainristil, a rising star for Michigan, \u201cwithout our strongest 12th men, a stadium like the H(&$%@#$ is pretty scary for us - but they\u2019ll be here in spirit.\u201d`,
+        `The home team - known for their defense initially feigned strength as they held the Wolverines to just 3 points in the first quarter. JJ McCarthy then took over the game for the undefeated Michigan team, showing signs of potential future National Championship contendership.`,
+        `Just in case you thought the B(&*$%#&* were good enough to come back, Donovan Edwards slammed the door shut breaking off two long fourth-quarter touchdowns to propel the away team far and away above the foe. After a long draught, the Wolverines have officially started a \u201cstreak\u201d of their own in The Game.`
+      ]
+    },
+    {
+      id: "lions-play-spoiler-2023",
+      title: `Detroit Lions Play Spoiler`,
+      date: "2023-01-08",
+      author: `Joey Joppich`,
+      sport: "Football",
+      image: "assets/images/january8-2023.webp",
+      caption: ``,
+      excerpt: `Already eliminated themselves, the Lions scored a late touchdown to beat Green Bay 20-16 in Week 18, knocking the rival Packers out of playoff contention.`,
+      body: [
+        `After refrains of \u201csame old Lions\u201d sprang up after a 1-6 start to the season, some wondered whether the Dan Campbell era would be over before it even really got going. Tell those same fans that the Lions would still be in the playoff mix going into Week 18, and many would have looked at you like you were speaking another language.`,
+        `Well that\u2019s just where the humble Lions found themselves heading to Lambeau Field tied with Green Bay in the standings at 8-8 needing a win plus a little help to take a shot at their first playoff win since before many Detroiters could remember. Unfortunately, before the game even kicked off, the Lions were eliminated from contention. Now only the Packers were playing for a playoff spot, and the Lions were playing for pride alone.`,
+        `From their couches on their weekly Sunday rituals, loyal fans saw their team use that incentive of pride alone to score a late touchdown to take a 20-16 lead, keeping the hated Packers from yet another playoff bid. Interviewed on one of those couches, one local father noted, \u201cmaybe this isn\u2019t the same old Lions!\u201d`,
+        `While there will be no Week 19 for this Lions team, one can\u2019t help but think of this as a win for the perpetual losers. Things are looking up in the Dan Campbell era.`
+      ]
+    },
+    {
+      id: "michigan-national-championship-2024",
+      title: `Michigan Wins the National Championship`,
+      date: "2024-01-09",
+      author: `Tommy Joppich`,
+      sport: "Football",
+      image: "assets/images/january9-2024.jpg",
+      caption: ``,
+      excerpt: `Michigan dismantled Washington 34-13 to win the national championship \u2014 its first title since 1997 and first of the College Football Playoff era.`,
+      body: [
+        `Electric atmosphere, undeniable dominance, a long-time coming. All phrases that could be used to describe the 34-13 smackdown the Wolverines of Michigan put on the Washington Huskies yesterday in the College Football National Championship. Purple might be an awesome color, but all the players and fans wearing it last night went home disappointed.`,
+        `The Wolverines went effectively \u201call in\u201d for this game putting out their superteam of recent players who are all expected to end their college careers with a title. JJ McCarthy made clutch passes despite only throwing the ball 18 times. Blake Corum dominated the run game with 134 yards on the ground. Mikey Sainristil caught a game-sealing interception which sent the blue crowd roaring. And Head Coach Jim Harbaugh completed his last masterclass in a short return to his alma-mater.`,
+        `Despite Heisman caliber Michael Penix Jr. and star wide receiver Rome Odunze, the Michigan defense only gave up one touchdown leaving their 12th man never doubting. I got the chance to talk to a few Michigan students who made the trip down to support their team as they had done all season.`,
+        `\u201cGo Blue!!\u201d Manny, Laura, Tommy, Abby, Libby, and Taylor all shouted in unison from the top of the lower deck of the Houston stadium. \u201cI literally slept in the Orlando airport last night on a layover and plan on doing the same thing on the way home tomorrow night.\u201d Tommy said - I\u2019m not sure if he was bragging or coping with his flight decisions.`,
+        `Either way, he went home a champion-by-association, as the Wolverines took home their first championship since 1997 and first during the CFP era. Go Blue!`
+      ]
+    },
+    {
+      id: "michigan-basketball-players-era-2025",
+      title: `Michigan Men\u2019s Basketball Wins Player\u2019s Era Festival`,
+      date: "2025-11-26",
+      author: `Joey Joppich`,
+      sport: "Basketball",
+      image: "assets/images/november26-2025.png",
+      caption: ``,
+      excerpt: `Michigan basketball ran the table at the Player\u2019s Era Festival, blowing out San Diego State, Auburn, and Gonzaga en route to a $1 million tournament title.`,
+      body: [
+        `After a relatively disappointing football season, Michigan fans across the country have been looking forward to the basketball team taking the court. Led by Dusty May and with several new faces on the roster, the team has gotten off to a solid start, winning their first four games. The team was invited to this year\u2019s Player\u2019s Era Festival with a chance at $1 million.`,
+        `Few could have predicted what would happen next. Facing San Diego State in their first game, the Wolverines jumped out to an early lead and just never took their foot off the gas pedal, winning the game 94-54 behind strong offensive and defensive performances from seemingly the entire roster.`,
+        `The semifinal game appeared to be a tough matchup in the form of Auburn, however Michigan managed yet again to run the table with an eventual 102-72 win to reach the finals against Gonzaga. Widely disliked, especially by a bear at a particular Michigan bar in Chicago, Gonzaga appeared to be a great challenge for the streaking Wolverines.`,
+        `From the outset, though, a competitive game wasn\u2019t meant to be, as Michigan steamrolled the Bulldogs on their way to a 101-61 win and $1 million. Asked about the results, the bear seen at the bar predicted, \u201cthat\u2019s it. I\u2019ve seen enough. We are winning it all.\u201d Time will tell if his predictions ring true.`
+      ]
+    }
+  ];
+
+  /* =========================================================
+     HELPERS
+  ========================================================= */
+  function formatDate(iso){
+    const d = new Date(iso + "T00:00:00");
+    return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  }
+
+  function sortedArticles(){
+    return [...articles].sort((a,b) => new Date(b.date) - new Date(a.date));
+  }
+
+  function todayLine(){
+    const d = new Date();
+    return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }).toUpperCase();
+  }
+
+  /* =========================================================
+     RENDER: HOME
+  ========================================================= */
+  function renderHome(){
+    document.getElementById('todayLabel').textContent = todayLine();
+
+    const list = sortedArticles();
+    const feedMount = document.getElementById('feedMount');
+
+    if(list.length === 0){
+      feedMount.innerHTML = '<p class="empty-state">No articles yet &mdash; the presses are warming up.</p>';
+      return;
+    }
+
+    feedMount.innerHTML = list.map(a => `
+      <a class="feed-item" href="#/article/${a.id}">
+        <div class="thumb"><img class="vintage-photo" src="${a.image}" alt="${a.title}"></div>
+        <div class="feed-text">
+          <h3>${a.title}</h3>
+          <p class="byline">By ${a.author}<span class="dot">&bull;</span><span class="date">${formatDate(a.date)}</span></p>
+          <p class="dek">${a.excerpt}</p>
+        </div>
+      </a>
+    `).join('');
+  }
+
+  /* =========================================================
+     RENDER: ARTICLE
+  ========================================================= */
+  function renderArticle(id){
+    const a = articles.find(x => x.id === id);
+    const mount = document.getElementById('articleMount');
+
+    if(!a){
+      mount.innerHTML = '<p class="empty-state">That story couldn\u2019t be found.</p>';
+      return;
+    }
+
+    mount.innerHTML = `
+      ${a.sport ? `<p class="article-kicker">${a.sport}</p>` : ''}
+      <h1 class="headline">${a.title}</h1>
+      <p class="article-byline">By <span class="author">${a.author}</span> &middot; ${formatDate(a.date)}</p>
+      <div class="article-image-wrap">
+        <img class="vintage-photo" src="${a.image}" alt="${a.title}">
+      </div>
+      ${a.caption ? `<p class="image-caption">${a.caption}</p>` : ''}
+      <div class="article-body">
+        ${a.body.map(p => `<p>${p}</p>`).join('')}
+      </div>
+      <p class="end-mark">&#10070;</p>
+    `;
+  }
+
+  /* =========================================================
+     ROUTER
+  ========================================================= */
+  function router(){
+    const hash = window.location.hash;
+    const homeView = document.getElementById('homeView');
+    const articleView = document.getElementById('articleView');
+    const match = hash.match(/^#\/article\/(.+)$/);
+
+    if(match){
+      homeView.hidden = true;
+      articleView.hidden = false;
+      renderArticle(decodeURIComponent(match[1]));
+      window.scrollTo(0,0);
+    } else {
+      homeView.hidden = false;
+      articleView.hidden = true;
+      renderHome();
+    }
+  }
+
+  window.addEventListener('hashchange', router);
+  window.addEventListener('DOMContentLoaded', router);
+  router();
+</script>
+
+</body>
+</html>
